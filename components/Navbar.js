@@ -17,15 +17,19 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '#' },
+    { name: 'Home', href: '/' },
     { 
-      name: 'Clubs', 
-      href: '#',
-      submenu: ['Technical Clubs', 'Cultural Clubs', 'Sports Clubs']
+      name: 'Sociaty', 
+      href: '/society',
+      submenu: [
+        {name: 'Technical Clubs', href:'/society/technical'},
+        {name: 'Cultural Clubs', href:'/society/cultural'},
+        {name: 'Sports Clubs', href:'/society/sports'}
+      ]
     },
-    { name: 'Activities', href: '#' },
-    { name: 'Events', href: '#' },
-    { name: 'Contact', href: '#' }
+    { name: 'Activities', href: '/activity' },
+    { name: 'Events', href: '/events' },
+    { name: 'Contact', href: '/contact' }
   ];
 
   return (
@@ -78,13 +82,13 @@ export default function Navbar() {
                 {item.submenu && (
                   <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                     <div className="py-2 bg-white rounded-xl shadow-xl">
-                      {item.submenu.map((subItem) => (
+                      {item.submenu.map(({ name, href }, index) => (
                         <a
-                          key={subItem}
-                          href="#"
+                          key={index}
+                          href={href} // Use the href from the submenu item
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600"
                         >
-                          {subItem}
+                          {name}
                         </a>
                       ))}
                     </div>
@@ -149,13 +153,13 @@ export default function Navbar() {
                     </motion.a>
                     {item.submenu && (
                       <div className="ml-4 mt-2 space-y-1">
-                        {item.submenu.map((subItem) => (
+                        {item.submenu.map(({ name, href }, index) => (
                           <a
-                            key={subItem}
-                            href="#"
+                            key={index}
+                            href={href} // Use the href from the submenu item
                             className="block px-4 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
                           >
-                            {subItem}
+                            {name}
                           </a>
                         ))}
                       </div>
