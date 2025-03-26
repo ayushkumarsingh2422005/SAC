@@ -337,11 +337,11 @@ export default function NoticesPage() {
 
       {/* Notice Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 p-4 z-50 top-0 h-screen w-screen overflow-y-scroll">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-lg shadow-xl max-w-2xl w-full p-8"
+            className="bg-white rounded-lg shadow-xl max-w-2xl w-full p-8 mx-auto"
           >
             <h2 className="text-2xl font-bold mb-6 text-gray-900">
               {editingNotice ? 'Edit Notice' : 'Create Notice'}
