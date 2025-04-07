@@ -3,37 +3,35 @@ import mongoose from 'mongoose';
 const contactSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, "Name is required"],
+    trim: true
   },
   position: {
     type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-    enum: ['faculty', 'club_secretary', 'por_holder', 'committee_member'],
-  },
-  club: {
-    type: String,
-    required: function() {
-      return this.category === 'club_secretary';
-    },
+    required: [true, "Position is required"],
+    trim: true
   },
   department: {
     type: String,
-    required: function() {
-      return this.category === 'faculty';
-    },
+    required: [true, "Department is required"],
+    trim: true
   },
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, "Email is required"],
+    trim: true,
+    lowercase: true
   },
   phone: {
     type: String,
-    required: true,
+    required: [true, "Phone number is required"],
+    trim: true
+  },
+  category: {
+    type: String,
+    required: [true, "Category is required"],
+    enum: ["faculty", "club_secretary", "por_holder"],
+    default: "faculty"
   },
   image: {
     type: String,
@@ -48,17 +46,17 @@ const contactSchema = new mongoose.Schema({
     twitter: String,
     instagram: String,
   },
-  active: {
+  isActive: {
     type: Boolean,
-    default: true,
+    default: true
   },
 }, {
   timestamps: true,
 });
 
 // Create indexes for better query performance
-contactSchema.index({ category: 1, active: 1 });
-contactSchema.index({ club: 1, active: 1 });
+contactSchema.index({ category: 1, isActive: 1 });
+contactSchema.index({ club: 1, isActive: 1 });
 contactSchema.index({ order: 1 });
 
 const Contact = mongoose.models.Contact || mongoose.model('Contact', contactSchema);
