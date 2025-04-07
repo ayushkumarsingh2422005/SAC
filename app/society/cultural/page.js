@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 
 export default function CulturalPage() {
 
-    return (
+  return (
         <main className="min-h-screen bg-white">
             <Navbar />
 
@@ -266,6 +266,59 @@ export default function CulturalPage() {
                 </div>
             </section>\
 
+            {/* Statistics Section */}
+            <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        className="text-center mb-16"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-4xl font-bold text-gray-900 mb-4">CULFEST in Numbers</h2>
+                        <p className="text-xl text-gray-600">Celebrating Excellence in Cultural Arts</p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                        {[
+                            {
+                                number: "20+",
+                                label: "Events",
+                                description: "Diverse competitions and performances"
+                            },
+                            {
+                                number: "100+",
+                                label: "Colleges",
+                                description: "Participating institutions annually"
+                            },
+                            {
+                                number: "₹2L+",
+                                label: "Prize Money",
+                                description: "Total prize distribution"
+                            },
+                            {
+                                number: "3",
+                                label: "Days",
+                                description: "Of non-stop cultural extravaganza"
+                            }
+                        ].map((stat, index) => (
+                            <motion.div
+                                key={index}
+                                className="bg-white p-8 rounded-xl shadow-lg text-center"
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.2 }}
+                            >
+                                <div className="text-4xl md:text-5xl font-bold text-blue-600 mb-2">{stat.number}</div>
+                                <h3 className="text-xl font-semibold text-gray-900 mb-2">{stat.label}</h3>
+                                <p className="text-gray-600">{stat.description}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
             {/* Gallery Preview */}
             <section className="py-20 bg-gray-50">
                 <div className="container mx-auto px-4">
@@ -312,7 +365,7 @@ export default function CulturalPage() {
                             </motion.div>
                         ))}
                     </div>
-                </div>
+    </div>
             </section>
 
             <Footer />
