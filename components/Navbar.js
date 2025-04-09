@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
-export default function Navbar() {
+export default function Navbar({ whiteBg = false }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -27,7 +27,7 @@ export default function Navbar() {
         {name: 'Sports Clubs', href:'/society/sports'}
       ]
     },
-    { name: 'Activities', href: '/activity' },
+    { name: 'Notice', href: '/notices' },
     { name: 'Events', href: '/events' },
     { name: 'Contact', href: '/contact' }
   ];
@@ -35,7 +35,7 @@ export default function Navbar() {
   return (
     <motion.nav 
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-transparent'
+        whiteBg || isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-transparent'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -55,7 +55,7 @@ export default function Navbar() {
               height={40}
               className="rounded-full"
             />
-            <div className={`font-bold ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
+            <div className={`font-bold ${whiteBg || isScrolled ? 'text-gray-900' : 'text-white'}`}>
               <span className="text-2xl">NITJSR</span>
               <span className="text-sm block text-blue-600">Student Activities</span>
             </div>
@@ -68,7 +68,7 @@ export default function Navbar() {
                 <motion.a
                   href={item.href}
                   className={`px-4 py-2 rounded-full mx-1 font-medium transition-colors ${
-                    isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-200'
+                    whiteBg || isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-200'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   initial={{ opacity: 0, y: -20 }}
@@ -103,7 +103,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Join Now
+              Achivement
             </motion.button>
           </div>
 
@@ -115,7 +115,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className={`p-2 rounded-lg ${
-                isScrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10'
+                whiteBg || isScrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10'
               }`}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -170,7 +170,7 @@ export default function Navbar() {
                   className="w-full mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   whileTap={{ scale: 0.95 }}
                 >
-                  Join Now
+                  Achivement
                 </motion.button>
               </div>
             </motion.div>

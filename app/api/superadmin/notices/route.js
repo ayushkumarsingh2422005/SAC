@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectToDB } from '@/lib/mongodb';
 import Notice from '@/models/Notice';
 import { auth } from '@/lib/auth';
+import { uploadFileToS3 } from '@/lib/s3-upload';
 
 export async function GET(req) {
     try {
@@ -82,10 +83,19 @@ export async function POST(req) {
                 { status: 403 }
             );
         }
-        console.log(user)
 
-        const noticeData = await req.json();
-        console.log(noticeData)
+        const formData = await req.formData();
+        const files = formData.getAll('files');
+        const noticeData = {
+            title: formData.get('title'),
+            content: formData.get('content'),
+            category: formData.get('category'),
+            priority: formData.get('priority'),
+            expiresAt: formData.get('expiresAt'),
+            isActive: formData.get('isActive') === 'true',
+            postedBy: user._id,
+            files: [] // Initialize empty files array
+        };
 
         // Validate required fields
         const requiredFields = ['title', 'content', 'category', 'priority', 'expiresAt'];
@@ -98,44 +108,36 @@ export async function POST(req) {
             );
         }
 
-        // Validate expiry date
-        const expiryDate = new Date(noticeData.expiresAt);
-        if (isNaN(expiryDate.getTime())) {
-            return NextResponse.json(
-                { error: 'Invalid expiry date format' },
-                { status: 400 }
-            );
+        // Handle file uploads
+        for (const file of files) {
+            if (file.size > 0) {
+                const uploadResult = await uploadFileToS3(file, process.env.AWS_BUCKET_NAME);
+                
+                // Upload the file to S3 using the signed URL
+                const uploadResponse = await fetch(uploadResult.signedUrl, {
+                    method: 'PUT',
+                    body: file,
+                    headers: {
+                        'Content-Type': file.type,
+                    },
+                });
+
+                if (!uploadResponse.ok) {
+                    throw new Error('Failed to upload file to S3');
+                }
+
+                // Add file information to noticeData
+                noticeData.files.push({
+                    name: uploadResult.name,
+                    key: uploadResult.key,
+                    url: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadResult.key}`,
+                    size: uploadResult.size,
+                    type: uploadResult.type
+                });
+            }
         }
 
-        if (expiryDate <= new Date()) {
-            return NextResponse.json(
-                { error: 'Expiry date must be in the future' },
-                { status: 400 }
-            );
-        }
-
-        // Validate category
-        const validCategories = ['cultural', 'sports', 'technical', 'club_activities', 'competitions', 'events'];
-        if (!validCategories.includes(noticeData.category)) {
-            return NextResponse.json(
-                { error: 'Invalid category' },
-                { status: 400 }
-            );
-        }
-
-        // Validate priority
-        const validPriorities = ['low', 'medium', 'high', 'urgent'];
-        if (!validPriorities.includes(noticeData.priority)) {
-            return NextResponse.json(
-                { error: 'Invalid priority level' },
-                { status: 400 }
-            );
-        }
-
-        noticeData.postedBy = user._id;
-        noticeData.isActive = noticeData.isActive ?? true; // Default to active if not specified
-
-        // Create notice
+        // Create notice with file information
         const notice = new Notice(noticeData);
         await notice.save();
 

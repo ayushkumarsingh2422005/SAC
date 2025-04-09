@@ -6,8 +6,9 @@ export async function GET() {
     try {
         await connectToDB();
 
-        // Get all active contacts
-        const contacts = await Contact.find({ isActive: true }).sort({ createdAt: -1 });
+        // Get all active contacts and sort by order
+        const contacts = await Contact.find({ isActive: true })
+            .sort({ order: 1, createdAt: -1 });
 
         return NextResponse.json(contacts);
     } catch (error) {

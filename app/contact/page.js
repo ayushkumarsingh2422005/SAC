@@ -49,7 +49,7 @@ export default function ContactPage() {
   if (loading) {
     return (
       <main className="min-h-screen bg-gray-50">
-        <Navbar />
+        <Navbar whiteBg={true}/>
         <div className="flex items-center justify-center min-h-screen">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-r-transparent"></div>
         </div>
@@ -61,7 +61,7 @@ export default function ContactPage() {
   if (error) {
     return (
       <main className="min-h-screen bg-gray-50">
-        <Navbar />
+        <Navbar whiteBg={true}/>
         <div className="container mx-auto px-4 py-8">
           <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
             {error}
@@ -74,7 +74,7 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar whiteBg={true}/>
       
       {/* Header */}
       <div className="bg-white border-b pt-20">

@@ -28,7 +28,8 @@ export async function GET(req) {
             .sort({ priority: -1, createdAt: -1 })
             .skip((page - 1) * limit)
             .limit(limit)
-            .populate('postedBy', 'name role');
+            .populate('postedBy', 'name role')
+            .select('title content category priority files postedBy createdAt expiresAt');
 
         // Get total count for pagination
         const total = await Notice.countDocuments(query);

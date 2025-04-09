@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectToDB } from '@/lib/mongodb';
 import Notice from '@/models/Notice';
 import { auth } from '@/lib/auth';
+import { deleteFileFromS3, uploadFileToS3 } from '@/lib/s3-upload';
 
 export async function GET(req, { params }) {
     try {
@@ -16,7 +17,7 @@ export async function GET(req, { params }) {
             );
         }
 
-        const { id } = params;
+        const id = params.id;
         const notice = await Notice.findById(id).populate('postedBy', 'name role');
 
         if (!notice) {
@@ -49,10 +50,20 @@ export async function PUT(req, { params }) {
             );
         }
 
-        const { id } = params;
-        const updateData = await req.json();
+        const id = params.id;
+        const formData = await req.formData();
+        const files = formData.getAll('files');
+        const deletedFiles = JSON.parse(formData.get('deletedFiles') || '[]');
+        const updateData = {
+            title: formData.get('title'),
+            content: formData.get('content'),
+            category: formData.get('category'),
+            priority: formData.get('priority'),
+            expiresAt: formData.get('expiresAt'),
+            isActive: formData.get('isActive') === 'true'
+        };
 
-        // Validate if notice exists
+        // Get existing notice
         const existingNotice = await Notice.findById(id);
         if (!existingNotice) {
             return NextResponse.json(
@@ -61,54 +72,49 @@ export async function PUT(req, { params }) {
             );
         }
 
-        // Validate expiry date if provided
-        if (updateData.expiresAt) {
-            const expiryDate = new Date(updateData.expiresAt);
-            if (isNaN(expiryDate.getTime())) {
-                return NextResponse.json(
-                    { error: 'Invalid expiry date format' },
-                    { status: 400 }
-                );
+        // Handle deleted files
+        if (deletedFiles.length > 0) {
+            for (const fileKey of deletedFiles) {
+                await deleteFileFromS3(fileKey, process.env.AWS_BUCKET_NAME);
             }
+            updateData.files = existingNotice.files.filter(file => !deletedFiles.includes(file.key));
+        } else {
+            updateData.files = existingNotice.files;
+        }
 
-            if (expiryDate <= new Date()) {
-                return NextResponse.json(
-                    { error: 'Expiry date must be in the future' },
-                    { status: 400 }
-                );
+        // Handle new file uploads
+        for (const file of files) {
+            if (file.size > 0) {
+                const uploadResult = await uploadFileToS3(file, process.env.AWS_BUCKET_NAME);
+                
+                // Upload the file to S3 using the signed URL
+                const uploadResponse = await fetch(uploadResult.signedUrl, {
+                    method: 'PUT',
+                    body: file,
+                    headers: {
+                        'Content-Type': file.type,
+                    },
+                });
+
+                if (!uploadResponse.ok) {
+                    throw new Error('Failed to upload file to S3');
+                }
+
+                // Add new file information to updateData
+                updateData.files.push({
+                    name: uploadResult.name,
+                    key: uploadResult.key,
+                    url: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadResult.key}`,
+                    size: uploadResult.size,
+                    type: uploadResult.type
+                });
             }
         }
 
-        // Validate category if provided
-        if (updateData.category) {
-            const validCategories = ['cultural', 'sports', 'technical', 'club_activities', 'competitions', 'events'];
-            if (!validCategories.includes(updateData.category)) {
-                return NextResponse.json(
-                    { error: 'Invalid category' },
-                    { status: 400 }
-                );
-            }
-        }
-
-        // Validate priority if provided
-        if (updateData.priority) {
-            const validPriorities = ['low', 'medium', 'high', 'urgent'];
-            if (!validPriorities.includes(updateData.priority)) {
-                return NextResponse.json(
-                    { error: 'Invalid priority level' },
-                    { status: 400 }
-                );
-            }
-        }
-
-        // Update the notice
+        // Update notice
         const notice = await Notice.findByIdAndUpdate(
             id,
-            { 
-                ...updateData,
-                updatedBy: user._id,
-                updatedAt: new Date()
-            },
+            updateData,
             { new: true, runValidators: true }
         ).populate('postedBy', 'name role');
 
@@ -138,8 +144,8 @@ export async function DELETE(req, { params }) {
             );
         }
 
-        const { id } = params;
-        const notice = await Notice.findByIdAndDelete(id);
+        const id = params.id;
+        const notice = await Notice.findById(id);
 
         if (!notice) {
             return NextResponse.json(
@@ -147,6 +153,16 @@ export async function DELETE(req, { params }) {
                 { status: 404 }
             );
         }
+
+        // Delete all files from S3
+        if (notice.files && notice.files.length > 0) {
+            for (const file of notice.files) {
+                await deleteFileFromS3(file.key, process.env.AWS_BUCKET_NAME);
+            }
+        }
+
+        // Delete notice from database
+        await Notice.findByIdAndDelete(id);
 
         return NextResponse.json({
             message: 'Notice deleted successfully'

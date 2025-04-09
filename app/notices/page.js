@@ -69,7 +69,7 @@ export default function NoticesPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar whiteBg={true}/>
       
       {/* Header - Added pt-20 to account for navbar height */}
       <div className="bg-white border-b pt-20">
@@ -169,31 +169,37 @@ export default function NoticesPage() {
                               {notice.venue}
                             </span>
                           )}
-                          {notice.attachments?.length > 0 && (
+                          {notice.files && notice.files.length > 0 && (
                             <span className="flex items-center">
                               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                               </svg>
-                              {notice.attachments.length} attachment{notice.attachments.length !== 1 ? 's' : ''}
+                              {notice.files.length} attachment{notice.files.length !== 1 ? 's' : ''}
                             </span>
                           )}
                         </div>
-                        {notice.attachments?.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
-                            {notice.attachments.map((attachment, idx) => (
-                              <a
-                                key={idx}
-                                href={attachment.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-700"
-                              >
-                                {attachment.name}
-                                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                              </a>
-                            ))}
+                        {notice.files && notice.files.length > 0 && (
+                          <div className="mt-4">
+                            <h4 className="text-sm font-medium text-gray-700 mb-2">Attachments:</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {notice.files.map((file, index) => (
+                                <a
+                                  key={index}
+                                  href={file.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-700"
+                                >
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                                  </svg>
+                                  {file.name}
+                                  <span className="ml-2 text-xs text-gray-500">
+                                    ({Math.round(file.size / 1024)} KB)
+                                  </span>
+                                </a>
+                              ))}
+                            </div>
                           </div>
                         )}
                       </div>

@@ -26,9 +26,27 @@ const noticeSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    attachments: [{
-        name: String,
-        url: String
+    files: [{
+        name: {
+            type: String,
+            required: true
+        },
+        key: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
+        size: {
+            type: Number,
+            required: true
+        },
+        type: {
+            type: String,
+            required: true
+        }
     }],
     expiresAt: {
         type: Date,

@@ -29,6 +29,8 @@ export default function NoticesPage() {
   });
   const [editingNotice, setEditingNotice] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [deletedFiles, setDeletedFiles] = useState([]);
 
   const categories = ['cultural', 'sports', 'technical', 'club_activities', 'competitions', 'events'];
   const priorities = ['low', 'medium', 'high', 'urgent'];
@@ -82,55 +84,97 @@ export default function NoticesPage() {
 
   const handleCreateNotice = async (formData) => {
     try {
-      setError(null); // Clear any existing errors
-      const token = localStorage.getItem('adminToken'); // Retrieve the token from localStorage
+      setError(null);
+      setUploadProgress(0);
+      const token = localStorage.getItem('adminToken');
+      
+      // Create FormData object
+      const data = new FormData();
+      data.append('title', formData.title);
+      data.append('content', formData.content);
+      data.append('category', formData.category);
+      data.append('priority', formData.priority);
+      data.append('expiresAt', formData.expiresAt);
+      data.append('isActive', formData.isActive);
+
+      // Append files
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput && fileInput.files) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+          data.append('files', fileInput.files[i]);
+        }
+      }
+
       const response = await fetch('/api/superadmin/notices', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Add the authorization token to the headers
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData),
+        body: data
       });
 
-      const data = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create notice');
+        throw new Error(result.error || 'Failed to create notice');
       }
 
-      // Add the new notice to the list and refresh to ensure correct order
       await fetchNotices();
       setIsModalOpen(false);
       setEditingNotice(null);
+      setUploadProgress(100);
     } catch (error) {
       setError(error.message);
+      setUploadProgress(0);
     }
   };
 
-  const handleUpdateNotice = async (noticeId, updates) => {
+  const handleUpdateNotice = async (noticeId, formData) => {
     try {
-      setError(null); // Clear any existing errors
+      setError(null);
+      setUploadProgress(0);
+      const token = localStorage.getItem('adminToken');
+      
+      // Create FormData object
+      const data = new FormData();
+      data.append('title', formData.title);
+      data.append('content', formData.content);
+      data.append('category', formData.category);
+      data.append('priority', formData.priority);
+      data.append('expiresAt', formData.expiresAt);
+      data.append('isActive', formData.isActive);
+      data.append('deletedFiles', JSON.stringify(deletedFiles));
+
+      // Append files
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput && fileInput.files) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+          data.append('files', fileInput.files[i]);
+        }
+      }
+
       const response = await fetch(`/api/superadmin/notices/${noticeId}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(updates),
+        body: data
       });
 
-      const data = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to update notice');
+        throw new Error(result.error || 'Failed to update notice');
       }
 
-      // Refresh notices to ensure we have the latest data
       await fetchNotices();
       setIsModalOpen(false);
       setEditingNotice(null);
+      setDeletedFiles([]);
+      setUploadProgress(100);
     } catch (error) {
       setError(error.message);
+      setUploadProgress(0);
     }
   };
 
@@ -140,7 +184,7 @@ export default function NoticesPage() {
     }
 
     try {
-      setError(null); // Clear any existing errors
+      setError(null);
       const response = await fetch(`/api/superadmin/notices/${noticeId}`, {
         method: 'DELETE',
       });
@@ -150,11 +194,14 @@ export default function NoticesPage() {
         throw new Error(data.error || 'Failed to delete notice');
       }
 
-      // Refresh notices to ensure we have the latest data
       await fetchNotices();
     } catch (error) {
       setError(error.message);
     }
+  };
+
+  const handleDeleteFile = (fileKey) => {
+    setDeletedFiles([...deletedFiles, fileKey]);
   };
 
   return (
@@ -253,6 +300,21 @@ export default function NoticesPage() {
                       <div className="flex flex-col">
                         <div className="text-sm font-medium text-gray-900">{notice.title}</div>
                         <div className="text-sm text-gray-500 line-clamp-1">{notice.content}</div>
+                        {notice.files && notice.files.length > 0 && (
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {notice.files.map((file, index) => (
+                              <a
+                                key={index}
+                                href={file.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs text-blue-600 hover:text-blue-800"
+                              >
+                                {file.name}
+                              </a>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -352,25 +414,6 @@ export default function NoticesPage() {
               const formData = new FormData(e.target);
               const data = Object.fromEntries(formData.entries());
               
-              // Validate required fields
-              const requiredFields = ['title', 'content', 'category', 'priority', 'expiresAt'];
-              const missingFields = requiredFields.filter(field => !data[field]);
-              
-              if (missingFields.length > 0) {
-                setError(`Please fill in all required fields: ${missingFields.join(', ')}`);
-                return;
-              }
-
-              // Convert isActive to boolean and ensure expiresAt is valid
-              data.isActive = data.isActive === 'true';
-              
-              // Validate expiry date is in the future
-              const expiryDate = new Date(data.expiresAt);
-              if (expiryDate <= new Date()) {
-                setError('Expiry date must be in the future');
-                return;
-              }
-              
               if (editingNotice) {
                 await handleUpdateNotice(editingNotice._id, data);
               } else {
@@ -430,14 +473,41 @@ export default function NoticesPage() {
                 </div>
 
                 <div className={formGroupStyles}>
-                  <label className={labelStyles}>Venue (Optional)</label>
+                  <label className={labelStyles}>Files</label>
                   <input
-                    type="text"
-                    name="venue"
-                    defaultValue={editingNotice?.venue}
+                    type="file"
+                    name="files"
+                    multiple
                     className={inputStyles}
-                    placeholder="Enter venue if applicable"
                   />
+                  {editingNotice?.files && editingNotice.files.length > 0 && (
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-600">Current files:</p>
+                      <ul className="mt-1 space-y-1">
+                        {editingNotice.files.map((file, index) => (
+                          <li key={index} className="flex items-center justify-between">
+                            <a
+                              href={file.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm text-blue-600 hover:text-blue-800"
+                            >
+                              {file.name}
+                            </a>
+                            {!deletedFiles.includes(file.key) && (
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteFile(file.key)}
+                                className="text-red-600 hover:text-red-800"
+                              >
+                                Delete
+                              </button>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div className={formGroupStyles}>
@@ -467,7 +537,11 @@ export default function NoticesPage() {
               <div className="mt-8 flex justify-end space-x-4">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    setEditingNotice(null);
+                    setDeletedFiles([]);
+                  }}
                   className={buttonStyles.secondary}
                 >
                   Cancel

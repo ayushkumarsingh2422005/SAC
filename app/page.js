@@ -167,6 +167,7 @@ export default function Home() {
         </motion.div>
       </section>
 
+
       {/* Notice Board Section - Added pt-20 for pages where hero section is not visible */}
       <section className={`py-16 bg-gray-50 ${!notices.length ? 'pt-36' : ''}`}>
         <div className="container mx-auto px-4">
@@ -467,13 +468,75 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">{club.name}</h3>
-                  <p className="text-gray-600 mb-4">{club.description}</p>
-                  <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors">
+                  <p className="text-gray-600 mb-0">{club.description}</p>
+                  {/* <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors">
                     Learn More →
-                  </button>
+                  </button> */}
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* From the Dean's Desk Section - Government Style */}
+      <section className="py-16 bg-white border-t-4 border-blue-800">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8">
+              {/* Left Column - Dean's Profile */}
+              <div className="md:w-1/3 bg-gray-50 p-6 border border-gray-200">
+                <div className="text-center">
+                  <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-800">
+                    <Image
+                      src="/dean-profile.jpg"
+                      alt="Dean's Profile"
+                      width={128}
+                      height={128}
+                      className="object-cover"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold text-blue-900 mb-2">Prof. John Doe</h3>
+                  <p className="text-gray-700 mb-1">Dean of Student Affairs</p>
+                  <p className="text-gray-600 text-sm">NIT Jamshedpur</p>
+                </div>
+              </div>
+
+              {/* Right Column - Message */}
+              <div className="md:w-2/3">
+                <div className="border-l-4 border-blue-800 pl-6">
+                  <h2 className="text-2xl font-bold text-blue-900 mb-6">From the Dean's Desk</h2>
+                  
+                  <div className="space-y-4 text-gray-800">
+                    <p className="leading-relaxed">
+                      It gives me immense pleasure to welcome you to the Student Activity Center of NIT Jamshedpur. 
+                      As the Dean of Student Affairs, I am committed to fostering an environment that promotes 
+                      holistic development alongside academic excellence.
+                    </p>
+                    
+                    <p className="leading-relaxed">
+                      The Student Activity Center serves as a platform for our students to explore their potential 
+                      beyond the classroom. Through various clubs, societies, and events, we aim to nurture 
+                      leadership qualities, teamwork, and social responsibility among our students.
+                    </p>
+
+                    <p className="leading-relaxed">
+                      Our institution takes pride in maintaining a perfect balance between academic rigor and 
+                      extracurricular activities. I encourage all students to actively participate in these 
+                      activities as they play a crucial role in shaping well-rounded professionals and 
+                      responsible citizens.
+                    </p>
+
+                    <div className="mt-8 pt-4 border-t border-gray-200">
+                      <p className="text-gray-600 text-sm">
+                        <span className="font-semibold">Office Hours:</span> Monday to Friday, 10:00 AM - 5:00 PM<br />
+                        <span className="font-semibold">Contact:</span> dean.sa@nitjsr.ac.in
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

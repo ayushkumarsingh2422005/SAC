@@ -14,7 +14,8 @@ export default function ContactsPage() {
     department: '',
     email: '',
     phone: '',
-    category: 'faculty'
+    category: 'faculty',
+    order: 0
   });
 
   useEffect(() => {
@@ -66,7 +67,8 @@ export default function ContactsPage() {
         department: '',
         email: '',
         phone: '',
-        category: 'faculty'
+        category: 'faculty',
+        order: 0
       });
     } catch (error) {
       setError(error.message);
@@ -81,7 +83,8 @@ export default function ContactsPage() {
       department: contact.department,
       email: contact.email,
       phone: contact.phone,
-      category: contact.category
+      category: contact.category,
+      order: contact.order
     });
     setIsModalOpen(true);
   };
@@ -116,7 +119,8 @@ export default function ContactsPage() {
       department: '',
       email: '',
       phone: '',
-      category: 'faculty'
+      category: 'faculty',
+      order: 0
     });
     setIsModalOpen(true);
   };
@@ -158,6 +162,7 @@ export default function ContactsPage() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Department</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
@@ -176,6 +181,9 @@ export default function ContactsPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 capitalize">{contact.category.replace('_', ' ')}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{contact.order}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{contact.email}</div>
@@ -271,6 +279,16 @@ export default function ContactsPage() {
                     <option value="club_secretary">Club Secretary</option>
                     <option value="por_holder">POR Holder</option>
                   </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
+                  <input
+                    type="number"
+                    value={formData.order}
+                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2.5"
+                    required
+                  />
                 </div>
                 <div className="flex justify-end space-x-4 mt-8">
                   <button
