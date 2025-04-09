@@ -111,7 +111,7 @@ export async function POST(req) {
         // Handle file uploads
         for (const file of files) {
             if (file.size > 0) {
-                const uploadResult = await uploadFileToS3(file, process.env.AWS_BUCKET_NAME);
+                const uploadResult = await uploadFileToS3("notices",file, process.env.AWS_BUCKET_NAME);
                 
                 // Upload the file to S3 using the signed URL
                 const uploadResponse = await fetch(uploadResult.signedUrl, {
