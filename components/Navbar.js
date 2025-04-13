@@ -98,13 +98,14 @@ export default function Navbar({ whiteBg = false }) {
             ))}
             
             {/* CTA Button */}
-            <motion.button
+            <motion.a
               className="ml-4 px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              href='/achievement'
             >
               Achivement
-            </motion.button>
+            </motion.a>
           </div>
 
           {/* Mobile Menu Button */}
