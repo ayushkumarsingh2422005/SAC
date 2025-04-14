@@ -1,23 +1,11 @@
 import mongoose from 'mongoose';
 
 const imageSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
-  key: {
-    type: String,
-    required: true
-  },
   url: {
     type: String,
     required: true
   },
-  size: {
-    type: Number,
-    required: true
-  },
-  type: {
+  caption: {
     type: String,
     required: true
   }
@@ -25,12 +13,10 @@ const imageSchema = new mongoose.Schema({
 
 const linkSchema = new mongoose.Schema({
   url: {
-    type: String,
-    required: true
+    type: String
   },
   text: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
@@ -76,27 +62,15 @@ const achievementSchema = new mongoose.Schema({
     enum: ['active', 'archived'],
     default: 'active'
   },
-  postedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  expiresAt: {
+  createdAt: {
     type: Date,
-    default: () => new Date(+new Date() + 30*24*60*60*1000) // 30 days from now
+    default: Date.now
   },
-  isActive: {
-    type: Boolean,
-    default: true
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  timestamps: true
 });
-
-// Index for faster queries
-achievementSchema.index({ createdAt: -1 });
-achievementSchema.index({ category: 1, createdAt: -1 });
-achievementSchema.index({ isActive: 1, createdAt: -1 });
 
 // Update the updatedAt field before saving
 achievementSchema.pre('save', function(next) {
@@ -115,21 +89,21 @@ achievementSchema.virtual('formattedDate').get(function() {
 
 // Static method to get recent achievements
 achievementSchema.statics.getRecentAchievements = async function(limit = 3) {
-  return this.find({ isRecent: true, status: 'active', isActive: true })
+  return this.find({ isRecent: true, status: 'active' })
     .sort({ date: -1 })
     .limit(limit);
 };
 
 // Static method to get achievements by category
 achievementSchema.statics.getByCategory = async function(category) {
-  return this.find({ category, status: 'active', isActive: true })
+  return this.find({ category, status: 'active' })
     .sort({ date: -1 });
 };
 
 // Static method to get achievement statistics
 achievementSchema.statics.getStats = async function() {
   const stats = await this.aggregate([
-    { $match: { status: 'active', isActive: true } },
+    { $match: { status: 'active' } },
     {
       $group: {
         _id: null,

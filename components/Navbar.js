@@ -22,9 +22,9 @@ export default function Navbar({ whiteBg = false }) {
       name: 'Sociaty', 
       href: '/society',
       submenu: [
-        {name: 'Technical Clubs', href:'/society/technical'},
-        {name: 'Cultural Clubs', href:'/society/cultural'},
-        {name: 'Sports Clubs', href:'/society/sports'}
+        {name: 'OJASS', href:'/society/technical'},
+        {name: 'CulFest', href:'/society/cultural'},
+        {name: 'Urja', href:'/society/sports'}
       ]
     },
     { name: 'Notice', href: '/notices' },
@@ -102,7 +102,7 @@ export default function Navbar({ whiteBg = false }) {
               className="ml-4 px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              href='/achievement'
+              href='/achievements'
             >
               Achivement
             </motion.a>
