@@ -6,6 +6,7 @@ import Image from 'next/image';
 export default function Navbar({ whiteBg = false }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isEventAvailable, setIsEventAvailable] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -16,15 +17,30 @@ export default function Navbar({ whiteBg = false }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/events/len"); // Replace with your actual endpoint
+        const result = await response.json();
+        // alert(typeof(result));
+        setIsEventAvailable(result);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const navItems = [
     { name: 'Home', href: '/' },
-    { 
-      name: 'Sociaty', 
+    {
+      name: 'Sociaty',
       href: '/society',
       submenu: [
-        {name: 'OJASS', href:'/society/technical'},
-        {name: 'CulFest', href:'/society/cultural'},
-        {name: 'Urja', href:'/society/sports'}
+        { name: 'OJASS', href: '/society/ojass' },
+        { name: 'CulFest', href: '/society/culfest' },
+        { name: 'Urja', href: '/society/urja' }
       ]
     },
     { name: 'Notice', href: '/notices' },
@@ -33,10 +49,9 @@ export default function Navbar({ whiteBg = false }) {
   ];
 
   return (
-    <motion.nav 
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
-        whiteBg || isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-transparent'
-      }`}
+    <motion.nav
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${whiteBg || isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md' : 'bg-transparent'
+        }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -44,16 +59,15 @@ export default function Navbar({ whiteBg = false }) {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             className="flex items-center space-x-2"
             whileHover={{ scale: 1.05 }}
           >
             <Image
-              src="/nitjsr-logo.png" // Add your logo to public folder
+              src={whiteBg || isScrolled ? `/nitjsr-logo-dark.png` : `/nitjsr-logo-light.png`} // Add your logo to public folder
               alt="NITJSR Logo"
               width={40}
               height={40}
-              className="rounded-full"
             />
             <div className={`font-bold ${whiteBg || isScrolled ? 'text-gray-900' : 'text-white'}`}>
               <span className="text-2xl">NITJSR</span>
@@ -67,17 +81,24 @@ export default function Navbar({ whiteBg = false }) {
               <div key={item.name} className="relative group">
                 <motion.a
                   href={item.href}
-                  className={`px-4 py-2 rounded-full mx-1 font-medium transition-colors ${
-                    whiteBg || isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-200'
-                  }`}
+                  className={`px-4 py-2 rounded-full mx-1 font-medium transition-colors ${whiteBg || isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-blue-200'
+                    }`}
                   whileHover={{ scale: 1.05 }}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  {item.name}
+                  <span className="relative inline-flex items-center gap-2">
+                    {item.name}
+                    {(item.name === 'Events') && isEventAvailable && (
+                      <span className="relative flex h-3 w-3 right-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                      </span>
+                    )}
+                  </span>
                 </motion.a>
-                
+
                 {/* Submenu for Clubs */}
                 {item.submenu && (
                   <div className="absolute left-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
@@ -96,7 +117,7 @@ export default function Navbar({ whiteBg = false }) {
                 )}
               </div>
             ))}
-            
+
             {/* CTA Button */}
             <motion.a
               className="ml-4 px-6 py-2 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-colors"
@@ -109,15 +130,14 @@ export default function Navbar({ whiteBg = false }) {
           </div>
 
           {/* Mobile Menu Button */}
-          <motion.div 
+          <motion.div
             className="md:hidden"
             whileTap={{ scale: 0.95 }}
           >
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`p-2 rounded-lg ${
-                whiteBg || isScrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10'
-              }`}
+              className={`p-2 rounded-lg ${whiteBg || isScrolled ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10'
+                }`}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMenuOpen ? (
@@ -133,8 +153,8 @@ export default function Navbar({ whiteBg = false }) {
         {/* Mobile Menu */}
         <AnimatePresence>
           {isMenuOpen && (
-            <motion.div 
-              className="md:hidden bg-white rounded-2xl mt-2 shadow-xl overflow-hidden"
+            <motion.div
+              className="md:hidden bg-white rounded-2xl mt-2 shadow-xl overflow-hidden mb-3"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
@@ -150,7 +170,15 @@ export default function Navbar({ whiteBg = false }) {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      {item.name}
+                      <span className="relative inline-flex items-center gap-2">
+                        {item.name}
+                        {(item.name === 'Events') && isEventAvailable && (
+                          <span className="relative flex h-3 w-3 right-0">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                          </span>
+                        )}
+                      </span>
                     </motion.a>
                     {item.submenu && (
                       <div className="ml-4 mt-2 space-y-1">

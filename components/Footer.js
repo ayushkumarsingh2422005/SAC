@@ -105,14 +105,14 @@ export default function Footer() {
               </p>
               <span className="hidden md:block text-gray-600">|</span>
               <p className="text-sm text-gray-400">
-                Designed & Developed by{' '}
+                Designed, Developed & Maintained by{' '}
                 <a 
                   href="https://digicraft.one" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-blue-400 hover:text-blue-300 transition-colors font-medium"
                 >
-                  DigiCraft.one
+                  DigiCraft
                 </a>
               </p>
             </div>

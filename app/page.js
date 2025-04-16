@@ -2,12 +2,14 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function Home() {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isEventAvailable, setIsEventAvailable] = useState(false);
 
   const categoryColors = {
     cultural: 'bg-purple-100 text-purple-800',
@@ -31,11 +33,26 @@ export default function Home() {
     fetchRecentNotices();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/events/len"); // Replace with your actual endpoint
+        const result = await response.json();
+        // alert(typeof(result));
+        setIsEventAvailable(result);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const fetchRecentNotices = async () => {
     try {
       const response = await fetch('/api/notices?limit=3&sort=priority');
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || 'Failed to fetch notices');
       }
@@ -48,28 +65,40 @@ export default function Home() {
     }
   };
 
+  const videoRef = useRef(null);
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 18;
+    }
+  };
+
   return (
     <main className="min-h-screen overflow-hidden bg-white">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="relative h-screen">
         {/* Background Image with mobile optimization */}
         <div className="absolute inset-0">
-          <Image
-            src="/nit-jsr-campus.png"
-            alt="NIT Jamshedpur Campus"
-            fill
-            className="object-cover brightness-[0.85] sm:brightness-75"
-            sizes="100vw"
-            priority
+          <video
+            src="/bg.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            ref={videoRef}
+            onLoadedMetadata={handleLoadedMetadata}
+            className="object-cover w-full h-full brightness-[0.85] sm:brightness-75"
           />
+
+
           {/* Enhanced gradient overlay for better text visibility */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20" />
         </div>
 
         <div className="relative h-full container mx-auto px-4 flex items-center">
-          <motion.div 
+          <motion.div
             className="w-full max-w-4xl mx-auto pt-16 sm:pt-20 px-4 sm:px-6 text-center sm:text-left"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -95,36 +124,50 @@ export default function Home() {
 
             {/* Description with better readability */}
             <p className="text-lg sm:text-xl text-white/90 mb-8 max-w-2xl mx-auto sm:mx-0 leading-relaxed">
-              Discover a world of opportunities through our diverse range of student activities, 
+              Discover a world of opportunities through our diverse range of student activities,
               clubs, and events that shape future leaders.
             </p>
 
             {/* Responsive button layout */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
-              <motion.button 
-                className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/30 backdrop-blur-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="flex items-center justify-center">
-                  Explore Activities
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </span>
-              </motion.button>
-              <motion.button 
-                className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold rounded-full hover:bg-white/20 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <span className="flex items-center justify-center">
-                  Join Clubs
-                  <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
-                  </svg>
-                </span>
-              </motion.button>
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* Live Events Button */}
+                <motion.button
+                  className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-500/30 backdrop-blur-sm"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link href={'/events'} className="flex items-center justify-center space-x-2">
+                    {/* Live Dot */}
+                    {isEventAvailable && (
+                      <span className="relative flex h-3 w-3 right-0">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                      </span>
+                    )}
+                    <span>Live Events</span>
+
+                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                </motion.button>
+
+                {/* Achievements Button */}
+                <motion.button
+                  className="w-full sm:w-auto px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white text-white font-semibold rounded-full hover:bg-white/20 transition-all shadow-inner hover:shadow-white/20"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link href={'/achievements'} className="flex items-center justify-center space-x-2">
+                    <span>Achievements</span>
+                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </Link>
+                </motion.button>
+              </div>
+
             </div>
 
             {/* Achievement badges */}
@@ -150,7 +193,7 @@ export default function Home() {
         </div>
 
         {/* Enhanced scroll indicator */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center cursor-pointer"
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
@@ -171,7 +214,7 @@ export default function Home() {
       {/* Notice Board Section - Added pt-20 for pages where hero section is not visible */}
       <section className={`py-16 bg-gray-50 ${!notices.length ? 'pt-36' : ''}`}>
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -252,8 +295,8 @@ export default function Home() {
 
             {/* View All Button */}
             <div className="text-center mt-8">
-              <a 
-                href="/notices" 
+              <a
+                href="/notices"
                 className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 View All Updates
@@ -269,7 +312,7 @@ export default function Home() {
       {/* Activities Section - Redesigned */}
       <section className="py-20">
         <div className="container mx-auto px-4 mb-20">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -288,8 +331,8 @@ export default function Home() {
         {[
           {
             title: "Technical Activities",
-            description: "Join technical clubs and participate in innovative projects and competitions. Develop your skills in robotics, programming, AI, and more.",
-            image: "/tech-activities.png",
+            description: "Join technical clubs and engage in projects and competitions, including our annual event, OJASS. Enhance your skills in robotics, programming, and AI.",
+            image: "/tech-activities.JPG",
             stats: [
               { number: "10+", label: "Tech Clubs" },
               { number: "20+", label: "Annual Projects" },
@@ -299,8 +342,8 @@ export default function Home() {
           },
           {
             title: "Cultural Activities",
-            description: "Express yourself through music, dance, drama, and various art forms. Participate in cultural festivals and showcase your talent.",
-            image: "/cultural-activities.png",
+            description: "Express yourself through music, dance, and art at NIT JSR's cultural events, highlighted by the annual CULFEST where you can showcase your talents.",
+            image: "/cultural-activities.JPG",
             stats: [
               { number: "8+", label: "Cultural Clubs" },
               { number: "15+", label: "Annual Events" },
@@ -310,8 +353,8 @@ export default function Home() {
           },
           {
             title: "Sports & Athletics",
-            description: "Participate in various sports activities and represent NIT JSR in national competitions. Stay fit and develop team spirit.",
-            image: "/sports-activities.png",
+            description: "Join various sports and represent NIT JSR in inter-NIT events. Stay fit and build team spirit, highlighted by the annual URJA event.",
+            image: "/sports-activities.JPG",
             stats: [
               { number: "12+", label: "Sports Teams" },
               { number: "25+", label: "Tournaments" },
@@ -341,7 +384,7 @@ export default function Home() {
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-2 gap-8 items-center min-h-[600px] py-20 relative">
                 <div className="text-white">
-                  <motion.h3 
+                  <motion.h3
                     className="text-4xl md:text-5xl font-bold mb-6"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -349,7 +392,7 @@ export default function Home() {
                   >
                     {activity.title}
                   </motion.h3>
-                  <motion.p 
+                  <motion.p
                     className="text-xl mb-8 text-white/90"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -358,7 +401,7 @@ export default function Home() {
                   >
                     {activity.description}
                   </motion.p>
-                  
+
                   <div className="grid grid-cols-3 gap-4 mb-8">
                     {activity.stats.map((stat, idx) => (
                       <motion.div
@@ -375,13 +418,14 @@ export default function Home() {
                     ))}
                   </div>
 
-                  <motion.button
+                  <motion.a
                     className="bg-white text-gray-900 px-8 py-3 rounded-full font-semibold hover:bg-white/90 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    href={index === 0 ? "/society/ojass" : index === 1 ? "/society/culfest" : "/society/urja"}
                   >
-                    Learn More
-                  </motion.button>
+                    {index === 0 ? "Annual Tech Fest" : index === 1 ? "Annual Cult Fest" : "Annual Sports Fest"}
+                  </motion.a>
                 </div>
 
                 <div className="hidden md:block">
@@ -396,7 +440,7 @@ export default function Home() {
       {/* Clubs Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -506,24 +550,24 @@ export default function Home() {
               <div className="md:w-2/3">
                 <div className="border-l-4 border-blue-800 pl-6">
                   <h2 className="text-2xl font-bold text-blue-900 mb-6">From the Dean's Desk</h2>
-                  
+
                   <div className="space-y-4 text-gray-800">
                     <p className="leading-relaxed">
-                      It gives me immense pleasure to welcome you to the Student Activity Center of NIT Jamshedpur. 
-                      As the Dean of Student Affairs, I am committed to fostering an environment that promotes 
+                      It gives me immense pleasure to welcome you to the Student Activity Center of NIT Jamshedpur.
+                      As the Dean of Student Affairs, I am committed to fostering an environment that promotes
                       holistic development alongside academic excellence.
                     </p>
-                    
+
                     <p className="leading-relaxed">
-                      The Student Activity Center serves as a platform for our students to explore their potential 
-                      beyond the classroom. Through various clubs, societies, and events, we aim to nurture 
+                      The Student Activity Center serves as a platform for our students to explore their potential
+                      beyond the classroom. Through various clubs, societies, and events, we aim to nurture
                       leadership qualities, teamwork, and social responsibility among our students.
                     </p>
 
                     <p className="leading-relaxed">
-                      Our institution takes pride in maintaining a perfect balance between academic rigor and 
-                      extracurricular activities. I encourage all students to actively participate in these 
-                      activities as they play a crucial role in shaping well-rounded professionals and 
+                      Our institution takes pride in maintaining a perfect balance between academic rigor and
+                      extracurricular activities. I encourage all students to actively participate in these
+                      activities as they play a crucial role in shaping well-rounded professionals and
                       responsible citizens.
                     </p>
 
@@ -582,9 +626,9 @@ export default function Home() {
               <p className="text-lg text-gray-600 mb-8">
                 Become a part of NIT Jamshedpur's vibrant student community and make your college life memorable
               </p>
-              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Register for Clubs
-              </button>
+              <Link href={'/contact'} className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                Contact for Clubs
+              </Link>
             </motion.div>
           </div>
         </div>
