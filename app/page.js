@@ -90,6 +90,7 @@ export default function Home() {
             ref={videoRef}
             onLoadedMetadata={handleLoadedMetadata}
             className="object-cover w-full h-full brightness-[0.85] sm:brightness-75"
+            poster="/nit-jsr-campus.png"
           />
 
 
