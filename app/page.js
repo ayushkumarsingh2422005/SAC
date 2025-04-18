@@ -67,11 +67,11 @@ export default function Home() {
 
   const videoRef = useRef(null);
 
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 18;
-    }
-  };
+  // const handleLoadedMetadata = () => {
+  //   if (videoRef.current) {
+  //     videoRef.current.currentTime = 18;
+  //   }
+  // };
 
   return (
     <main className="min-h-screen overflow-hidden bg-white">
@@ -88,7 +88,7 @@ export default function Home() {
             muted
             playsInline
             ref={videoRef}
-            onLoadedMetadata={handleLoadedMetadata}
+            // onLoadedMetadata={handleLoadedMetadata}
             className="object-cover w-full h-full brightness-[0.85] sm:brightness-75"
             poster="/nit-jsr-campus.png"
           />

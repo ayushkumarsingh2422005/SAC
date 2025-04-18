@@ -93,10 +93,11 @@ export default function AchievementsPage() {
             <Navbar />
 
             {/* Hero Section */}
-            <section className="relative h-[60vh]">
-                <div className="absolute inset-0">
+            <section className="relative h-[100vh]">
+
+                <div className="absolute inset-0 h">
                     <Image
-                        src="/achievements/hero-bg.jpg"
+                        src="/achievements/bg.png"
                         alt="Achievements Background"
                         fill
                         className="object-cover brightness-[0.85]"
@@ -105,52 +106,73 @@ export default function AchievementsPage() {
                     <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent" />
                 </div>
 
-                <div className="relative h-full container mx-auto px-4 flex items-center">
-                    <motion.div
-                        className="w-full max-w-4xl mx-auto text-center"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <motion.h1
-                            className="text-5xl md:text-6xl font-bold text-white mb-6"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                        >
-                            Our Achievements
-                        </motion.h1>
-                        <motion.p
-                            className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                        >
-                            Celebrating Excellence and Success in Every Field
-                        </motion.p>
+                <div className='flex flex-col justify-center align-middle items-center h-full py-10'>
+                    <div className="relative h-full container mx-auto px-4 flex items-center">
                         <motion.div
-                            className="flex flex-wrap justify-center gap-3"
+                            className="w-full max-w-4xl mx-auto text-center"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6 }}
+                            transition={{ duration: 0.8 }}
                         >
-                            {categories.map((category) => (
-                                <motion.button
-                                    key={category}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setFilters({ ...filters, category })}
-                                    className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300
+                            <motion.h1
+                                className="text-5xl md:text-6xl font-bold text-white mb-6"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                            >
+                                Our Achievements
+                            </motion.h1>
+                            <motion.p
+                                className="text-xl text-white/90 mb-8 max-w-2xl mx-auto"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.4 }}
+                            >
+                                Celebrating Excellence and Success in Every Field
+                            </motion.p>
+                            <motion.div
+                                className="flex flex-wrap justify-center gap-3"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.6 }}
+                            >
+                                {categories.map((category) => (
+                                    <motion.button
+                                        key={category}
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        onClick={() => setFilters({ ...filters, category })}
+                                        className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300
                     ${filters.category === category
-                                            ? 'bg-white text-gray-900 shadow-lg'
-                                            : 'bg-white/10 text-white hover:bg-white/20'}`}
-                                >
-                                    <span className="mr-2">{categoryIcons[category]}</span>
-                                    {category}
-                                </motion.button>
-                            ))}
+                                                ? 'bg-white text-gray-900 shadow-lg'
+                                                : 'bg-white/10 text-white hover:bg-white/20'}`}
+                                    >
+                                        <span className="mr-2">{categoryIcons[category]}</span>
+                                        {category}
+                                    </motion.button>
+                                ))}
+                            </motion.div>
                         </motion.div>
-                    </motion.div>
+
+                    </div>
+                    <div className='w-[90%] flex-wrap mx-auto bg-gradient-to-r from-blue-900 to-blue-600 flex justify-around gap-4 p-6 rounded-lg shadow-lg relative'>
+                        <div className='text-center text-white'>
+                            <h3 className='text-4xl font-bold'>100+</h3>
+                            <p className='text-lg'>Sports Wins</p>
+                        </div>
+                        <div className='text-center text-white'>
+                            <h3 className='text-4xl font-bold'>100+</h3>
+                            <p className='text-lg'>Sports Wins</p>
+                        </div>
+                        <div className='text-center text-white'>
+                            <h3 className='text-4xl font-bold'>100+</h3>
+                            <p className='text-lg'>Sports Wins</p>
+                        </div>
+                        <div className='text-center text-white'>
+                            <h3 className='text-4xl font-bold'>100+</h3>
+                            <p className='text-lg'>Sports Wins</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -213,26 +235,7 @@ export default function AchievementsPage() {
                             </div>
                         </motion.div>
                     )}
-
-                    <div className='w-full bg-gradient-to-r from-blue-900 to-blue-600 flex justify-around gap-4 p-6 rounded-lg shadow-lg'>
-                        <div className='text-center text-white'>
-                            <h3 className='text-4xl font-bold'>100+</h3>
-                            <p className='text-lg'>Sports Wins</p>
-                        </div>
-                        <div className='text-center text-white'>
-                            <h3 className='text-4xl font-bold'>100+</h3>
-                            <p className='text-lg'>Sports Wins</p>
-                        </div>
-                        <div className='text-center text-white'>
-                            <h3 className='text-4xl font-bold'>100+</h3>
-                            <p className='text-lg'>Sports Wins</p>
-                        </div>
-                        <div className='text-center text-white'>
-                            <h3 className='text-4xl font-bold'>100+</h3>
-                            <p className='text-lg'>Sports Wins</p>
-                        </div>
-                    </div>
-                    <br /><br /><br />
+                    <br /><br />
                     {/* All Achievements Section */}
                     {!loading && !error && achievements.length > 0 && (
                         <motion.div

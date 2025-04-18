@@ -52,7 +52,7 @@ export default function SportsPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
                         >
-                            <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">March 15-17, 2024</span>
+                            <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">Comming back in, 2026</span>
                             <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">NIT Jamshedpur</span>
                         </motion.div>
                     </motion.div>
@@ -118,28 +118,28 @@ export default function SportsPage() {
                         {
                             category: "Cricket",
                             description: "Where Legends Are Born",
-                            image: "/sports/cricket-bg.png",
+                            image: "/urja/cricket-bg.png",
                             color: "from-green-600/30 to-green-900/30",
                             transform: "skew(-12deg) translateX(-5%)"
                         },
                         {
                             category: "Football",
                             description: "The Beautiful Game",
-                            image: "/sports/football-bg.png",
+                            image: "/urja/football-bg.png",
                             color: "from-blue-600/30 to-blue-900/30",
                             transform: "skew(-12deg)"
                         },
                         {
                             category: "Basketball",
                             description: "Dunk Your Dreams",
-                            image: "/sports/basketball-bg.png",
+                            image: "/urja/basketball-bg.png",
                             color: "from-orange-600/30 to-orange-900/30",
                             transform: "skew(-12deg) translateX(5%)"
                         },
                         {
                             category: "Athletics",
                             description: "Speed & Strength",
-                            image: "/sports/athletics-bg.png",
+                            image: "/urja/athletics-bg.png",
                             color: "from-red-600/30 to-red-900/30",
                             transform: "skew(-12deg) translateX(10%)"
                         }
@@ -256,7 +256,7 @@ export default function SportsPage() {
                         <h2 className="text-4xl font-bold text-gray-900 mb-4">Action Shots</h2>
                         <p className="text-xl text-gray-600 mb-8">Relive the thrilling moments from previous editions</p>
                         <motion.a
-                            href="/society/sports/gallery"
+                            href="/society/urja/gallery"
                             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
@@ -279,13 +279,13 @@ export default function SportsPage() {
                                 transition={{ delay: item * 0.1 }}
                             >
                                 <Image
-                                    src={`/sports/gallery-${item}.png`}
+                                    src={`/urja/g${item}.jpg`}
                                     alt={`Gallery Image ${item}`}
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span className="text-white font-medium">Click to view</span>
+                                    {/* <span className="text-white font-medium">Click to view</span> */}
                                 </div>
                             </motion.div>
                         ))}

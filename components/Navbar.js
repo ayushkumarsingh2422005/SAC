@@ -35,11 +35,11 @@ export default function Navbar({ whiteBg = false }) {
   const navItems = [
     { name: 'Home', href: '/' },
     {
-      name: 'Sociaty',
-      href: '/society',
+      name: 'Society',
+      href: '/',
       submenu: [
-        { name: 'OJASS', href: '/society/ojass' },
-        { name: 'CulFest', href: '/society/culfest' },
+        { name: 'Ojass', href: '/society/ojass' },
+        { name: 'Culfest', href: '/society/culfest' },
         { name: 'Urja', href: '/society/urja' }
       ]
     },
@@ -64,7 +64,8 @@ export default function Navbar({ whiteBg = false }) {
             whileHover={{ scale: 1.05 }}
           >
             <Image
-              src={whiteBg || isScrolled ? `/nitjsr-logo-dark.png` : `/nitjsr-logo-light.png`} // Add your logo to public folder
+              src={whiteBg || isScrolled ? `/sac-logo-b.png` : `/sac-logo-y.png`} // Add your logo to public folder
+              // src={'/sac-logo-b.png'} // Add your logo to public folder
               alt="NITJSR Logo"
               width={40}
               height={40}

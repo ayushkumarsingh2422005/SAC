@@ -52,7 +52,7 @@ export default function TechnicalPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
                         >
-                            <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">March 15-17, 2024</span>
+                            <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">Comming back in, 2026</span>
                             <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">NIT Jamshedpur</span>
                         </motion.div>
                     </motion.div>
@@ -118,28 +118,28 @@ export default function TechnicalPage() {
                         {
                             category: "Robotics",
                             description: "Where Machines Come Alive",
-                            image: "/technical/robotics-bg.png",
+                            image: "/ojass/robotics-bg.jpg",
                             color: "from-blue-600/30 to-blue-900/30",
                             transform: "skew(-12deg) translateX(-5%)"
                         },
                         {
                             category: "Workshops",
                             description: "Learn & Innovate",
-                            image: "/technical/coding-bg.png",
+                            image: "/ojass/workshop-bg.png",
                             color: "from-green-600/30 to-green-900/30",
                             transform: "skew(-12deg)"
                         },
                         {
                             category: "Management",
                             description: "Strategic Excellence",
-                            image: "/technical/management-bg.png",
+                            image: "/ojass/management-bg.png",
                             color: "from-purple-600/30 to-purple-900/30",
                             transform: "skew(-12deg) translateX(5%)"
                         },
                         {
                             category: "Coding",
                             description: "Crafting Digital Solutions",
-                            image: "/technical/workshops-bg.png",
+                            image: "/ojass/coding-bg.png",
                             color: "from-orange-600/30 to-orange-900/30",
                             transform: "skew(-12deg) translateX(10%)"
                         }
@@ -256,7 +256,7 @@ export default function TechnicalPage() {
                         <h2 className="text-4xl font-bold text-gray-900 mb-4">Innovation Showcase</h2>
                         <p className="text-xl text-gray-600 mb-8">Glimpse into the world of technical excellence</p>
                         <motion.a
-                            href="/society/technical/gallery"
+                            href="/society/ojass/gallery"
                             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
@@ -269,7 +269,7 @@ export default function TechnicalPage() {
                     </motion.div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {[1, 2, 3, 4].map((item) => (
+                        {[1, 2, 3].map((item) => (
                             <motion.div
                                 key={item}
                                 className="relative aspect-square rounded-xl overflow-hidden group"
@@ -279,16 +279,33 @@ export default function TechnicalPage() {
                                 transition={{ delay: item * 0.1 }}
                             >
                                 <Image
-                                    src={`/technical/gallery-${item}.png`}
+                                    src={`/ojass/g${item}.png`}
                                     alt={`Gallery Image ${item}`}
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span className="text-white font-medium">Click to view</span>
+                                    {/* <span className="text-white font-medium">Click to view</span> */}
                                 </div>
                             </motion.div>
                         ))}
+                        <motion.div
+                            className="relative aspect-square rounded-xl overflow-hidden group"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4}}
+                        >
+                            <Image
+                                src={`/ojass/g4.jpg`}
+                                alt={`Gallery Image`}
+                                fill
+                                className="object-cover group-hover:scale-110 transition-transform duration-300"
+                            />
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                {/* <span className="text-white font-medium">Click to view</span> */}
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>

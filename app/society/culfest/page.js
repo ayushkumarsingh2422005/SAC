@@ -1,15 +1,17 @@
 'use client';
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import MyGallery from "@/components/Gallery";
 
 export default function CulturalPage() {
 
-  return (
+    return (
         <main className="min-h-screen bg-white">
             <Navbar />
+            {/* <MyGallery event={"culfest"}/> */}
 
             {/* Hero Section */}
             <section className="relative h-screen">
@@ -53,7 +55,7 @@ export default function CulturalPage() {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
                         >
-                            <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">March 15-20, 2024</span>
+                            <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">Comming back in, 2026</span>
                             <span className="px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white">NIT Jamshedpur</span>
                         </motion.div>
                     </motion.div>
@@ -331,7 +333,7 @@ export default function CulturalPage() {
                         <h2 className="text-4xl font-bold text-gray-900 mb-4">Moments to Remember</h2>
                         <p className="text-xl text-gray-600 mb-8">A glimpse into the magic of previous editions</p>
                         <motion.a
-                            href="/society/cultural/gallery"
+                            href="/society/culfest/gallery"
                             className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
@@ -354,18 +356,18 @@ export default function CulturalPage() {
                                 transition={{ delay: item * 0.1 }}
                             >
                                 <Image
-                                    src={`/cultural/gallery-${item}.png`}
+                                    src={`/culfest/g${item}.jpg`}
                                     alt={`Gallery Image ${item}`}
                                     fill
                                     className="object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span className="text-white font-medium">Click to view</span>
+                                    {/* <span className="text-white font-medium">Click to view</span> */}
                                 </div>
                             </motion.div>
                         ))}
                     </div>
-    </div>
+                </div>
             </section>
 
             <Footer />
