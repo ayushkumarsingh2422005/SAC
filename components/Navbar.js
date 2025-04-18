@@ -196,12 +196,13 @@ export default function Navbar({ whiteBg = false }) {
                     )}
                   </div>
                 ))}
-                <motion.button
+                <motion.a
                   className="w-full mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   whileTap={{ scale: 0.95 }}
+                  href='/achievements'
                 >
                   Achivement
-                </motion.button>
+                </motion.a>
               </div>
             </motion.div>
           )}
