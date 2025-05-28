@@ -541,8 +541,8 @@ export default function Home() {
                       className="object-cover"
                     />
                   </div>
-                  <h3 className="text-xl font-bold text-blue-900 mb-2">Prof. John Doe</h3>
-                  <p className="text-gray-700 mb-1">Dean of Student Affairs</p>
+                  <h3 className="text-xl font-bold text-blue-900 mb-2">Prabhat roy</h3>
+                  <p className="text-gray-700 mb-1">Dean of DSW</p>
                   <p className="text-gray-600 text-sm">NIT Jamshedpur</p>
                 </div>
               </div>
@@ -550,7 +550,7 @@ export default function Home() {
               {/* Right Column - Message */}
               <div className="md:w-2/3">
                 <div className="border-l-4 border-blue-800 pl-6">
-                  <h2 className="text-2xl font-bold text-blue-900 mb-6">From the Dean's Desk</h2>
+                  <h2 className="text-2xl font-bold text-blue-900 mb-6">From the Incharge Desk</h2>
 
                   <div className="space-y-4 text-gray-800">
                     <p className="leading-relaxed">
