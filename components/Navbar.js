@@ -39,9 +39,9 @@ export default function Navbar({ whiteBg = false }) {
       name: 'Society',
       href: '/',
       submenu: [
-        { name: 'Ojass', href: '/society/ojass' },
-        { name: 'Culfest', href: '/society/culfest' },
-        { name: 'Urja', href: '/society/urja' }
+        { name: 'URJA', href: '/society/urja' },
+        { name: 'OJASS', href: '/society/ojass' },
+        { name: 'CULFEST', href: '/society/culfest' }
       ]
     },
     { name: 'Notice', href: '/notices' },

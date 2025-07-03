@@ -331,6 +331,17 @@ export default function Home() {
         {/* Full-width activity cards */}
         {[
           {
+            title: "Sports & Athletics",
+            description: "Join various sports and represent NIT JSR in inter-NIT events. Stay fit and build team spirit, highlighted by the annual URJA event.",
+            image: "/sports-activities.JPG",
+            stats: [
+              { number: "12+", label: "Sports Teams" },
+              { number: "25+", label: "Tournaments" },
+              { number: "10+", label: "Training Facilities" }
+            ],
+            color: "from-orange-600 to-yellow-500"
+          },
+          {
             title: "Technical Activities",
             description: "Join technical clubs and engage in projects and competitions, including our annual event, OJASS. Enhance your skills in robotics, programming, and AI.",
             image: "/tech-activities.JPG",
@@ -351,17 +362,6 @@ export default function Home() {
               { number: "4+", label: "Major Festivals" }
             ],
             color: "from-purple-600 to-pink-500"
-          },
-          {
-            title: "Sports & Athletics",
-            description: "Join various sports and represent NIT JSR in inter-NIT events. Stay fit and build team spirit, highlighted by the annual URJA event.",
-            image: "/sports-activities.JPG",
-            stats: [
-              { number: "12+", label: "Sports Teams" },
-              { number: "25+", label: "Tournaments" },
-              { number: "10+", label: "Training Facilities" }
-            ],
-            color: "from-orange-600 to-yellow-500"
           }
         ].map((activity, index) => (
           <motion.div
