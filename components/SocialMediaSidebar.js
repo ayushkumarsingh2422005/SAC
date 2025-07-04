@@ -14,6 +14,39 @@ const socialLinks = [
       </svg>
     ),
   },
+  // {
+  //   name: "Instagram (Urja)",
+  //   url: "https://www.instagram.com/urja_nitjsr?igsh=MXpid2xjcmx4aWhz",
+  //   icon: (
+  //     <svg width="24" height="24" fill="none" stroke="#E1306C" strokeWidth="2">
+  //       <rect x="2" y="2" width="20" height="20" rx="5" />
+  //       <circle cx="12" cy="12" r="5" stroke="#E1306C" />
+  //       <circle cx="18" cy="6" r="1" fill="#E1306C" stroke="#E1306C" />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   name: "Instagram (Culfest)",
+  //   url: "https://www.instagram.com/culfest.nitjsr?igsh=cnJyeW0xeTk0djA2",
+  //   icon: (
+  //     <svg width="24" height="24" fill="none" stroke="#E1306C" strokeWidth="2">
+  //       <rect x="2" y="2" width="20" height="20" rx="5" />
+  //       <circle cx="12" cy="12" r="5" stroke="#E1306C" />
+  //       <circle cx="18" cy="6" r="1" fill="#E1306C" stroke="#E1306C" />
+  //     </svg>
+  //   ),
+  // },
+  // {
+  //   name: "Instagram (Ojass)",
+  //   url: "https://www.instagram.com/ojass.nitjsr?igsh=YTdic2Q4ZGc4amkz",
+  //   icon: (
+  //     <svg width="24" height="24" fill="none" stroke="#E1306C" strokeWidth="2">
+  //       <rect x="2" y="2" width="20" height="20" rx="5" />
+  //       <circle cx="12" cy="12" r="5" stroke="#E1306C" />
+  //       <circle cx="18" cy="6" r="1" fill="#E1306C" stroke="#E1306C" />
+  //     </svg>
+  //   ),
+  // },
   {
     name: "YouTube",
     url: "https://www.youtube.com/@sacnitjsr",
@@ -62,12 +95,13 @@ export default function SocialMediaSidebar() {
 
   return (
     <div
+      className={`social-sidebar`}
+      data-visible={visible}
       style={{
         position: "fixed",
         top: "40%",
         left: 0,
         zIndex: 1000,
-        transform: visible ? "translateX(0)" : "translateX(-100%)",
         transition: "transform 0.4s cubic-bezier(.4,0,.2,1)",
         background: "rgba(255,255,255,0.9)",
         borderTopRightRadius: "1rem",
@@ -77,28 +111,7 @@ export default function SocialMediaSidebar() {
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
-        // Responsive styles
         width: "auto",
-        ...(typeof window !== "undefined" && window.innerWidth <= 640
-          ? {
-              top: "auto",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              flexDirection: "row",
-              borderTopRightRadius: 0,
-              borderBottomRightRadius: 0,
-              borderTopLeftRadius: "1rem",
-              borderTopRightRadius: "1rem",
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
-              width: "100vw",
-              justifyContent: "center",
-              alignItems: "center",
-              transform: visible ? "translateY(0)" : "translateY(100%)",
-              transition: "transform 0.4s cubic-bezier(.4,0,.2,1)",
-            }
-          : {}),
       }}
       aria-label="Social Media Links"
     >
@@ -114,13 +127,13 @@ export default function SocialMediaSidebar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: typeof window !== "undefined" && window.innerWidth <= 640 ? "48px" : "56px",
-            height: typeof window !== "undefined" && window.innerWidth <= 640 ? "48px" : "56px",
+            width: "40px",
+            height: "40px",
             borderRadius: "50%",
             background: "#f3f3f3",
             transition: "background 0.2s",
             textDecoration: "none",
-            fontSize: typeof window !== "undefined" && window.innerWidth <= 640 ? "1.5rem" : "2rem",
+            fontSize: "1rem",
           }}
           onMouseOver={e => (e.currentTarget.style.background = "#e0e0e0")}
           onMouseOut={e => (e.currentTarget.style.background = "#f3f3f3")}
@@ -130,6 +143,12 @@ export default function SocialMediaSidebar() {
       ))}
       {/* Responsive CSS for SSR/CSR consistency */}
       <style>{`
+        .social-sidebar {
+          transform: translateX(0);
+        }
+        .social-sidebar[data-visible="false"] {
+          transform: translateX(-100%);
+        }
         @media (max-width: 640px) {
           .social-sidebar {
             top: auto !important;
@@ -141,21 +160,17 @@ export default function SocialMediaSidebar() {
             width: 100vw !important;
             justify-content: center !important;
             align-items: center !important;
-            transform: ${visible ? "translateY(0)" : "translateY(100%)"};
-            transition: transform 0.4s cubic-bezier(.4,0,.2,1);
             padding: 0.25rem 0.5rem 0.5rem 0.5rem !important;
+            transform: translateY(0) !important;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+          }
+          .social-sidebar[data-visible="false"] {
+            transform: translateY(100%) !important;
           }
           .social-sidebar a {
             width: 48px !important;
             height: 48px !important;
             font-size: 1.5rem !important;
-          }
-        }
-        @media (min-width: 641px) {
-          .social-sidebar a {
-            width: 56px !important;
-            height: 56px !important;
-            font-size: 2rem !important;
           }
         }
       `}</style>
