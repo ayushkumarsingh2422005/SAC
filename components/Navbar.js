@@ -46,7 +46,7 @@ export default function Navbar({ whiteBg = false }) {
     },
     { name: 'Notice', href: '/notices' },
     { name: 'Events', href: '/events' },
-    { name: 'Contact', href: '/contact' }
+    { name: 'Administration', href: '/administration' }
   ];
 
   return (
@@ -78,7 +78,7 @@ export default function Navbar({ whiteBg = false }) {
           </motion.div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item, index) => (
               <div key={item.name} className="relative group">
                 <motion.a
@@ -133,7 +133,7 @@ export default function Navbar({ whiteBg = false }) {
 
           {/* Mobile Menu Button */}
           <motion.div
-            className="md:hidden"
+            className="lg:hidden"
             whileTap={{ scale: 0.95 }}
           >
             <button
@@ -156,7 +156,7 @@ export default function Navbar({ whiteBg = false }) {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              className="md:hidden bg-white rounded-2xl mt-2 shadow-xl overflow-hidden mb-3"
+              className="lg:hidden bg-white rounded-2xl mt-2 shadow-xl overflow-hidden mb-3"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
