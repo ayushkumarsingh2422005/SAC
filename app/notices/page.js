@@ -15,9 +15,9 @@ export default function NoticesPage() {
   // Updated categories specific to SAC activities
   const categories = [
     'all',
-    'cultural',
     'sports',
     'technical',
+    'cultural',
     'club_activities',
     'competitions',
     'events'
