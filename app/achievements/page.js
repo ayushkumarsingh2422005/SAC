@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-const categories = ['Technical', 'Cultural', 'Sports', 'Other'];
+const categories = ['Sports', 'Technical', 'Cultural', 'Other'];
 
 const categoryColors = {
     Sports: 'bg-green-100 text-green-800',
