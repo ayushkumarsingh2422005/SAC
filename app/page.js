@@ -533,16 +533,16 @@ export default function Home() {
               <div className="md:w-1/3 bg-gray-50 p-6 border border-gray-200">
                 <div className="text-center">
                   <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-800">
-                    <Image
-                      src="/dean-profile.jpg"
+                    <img
+                      src="https://nitjsr.ac.in/backend/uploads/Faculty/CE113/profile/66f9f0b0-5caf-4b49-ba5f-112956f96bc4.jpg"
                       alt="Dean's Profile"
                       width={128}
                       height={128}
                       className="object-cover"
                     />
                   </div>
-                  <h3 className="text-xl font-bold text-blue-900 mb-2">Prabhat roy</h3>
-                  <p className="text-gray-700 mb-1">Dean of DSW</p>
+                  <h3 className="text-xl font-bold text-blue-900 mb-2">Dr Rakesh Pratap Singh</h3>
+                  <p className="text-gray-700 mb-1">Dean Students' Welfare</p>
                   <p className="text-gray-600 text-sm">NIT Jamshedpur</p>
                 </div>
               </div>

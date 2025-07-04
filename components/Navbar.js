@@ -35,6 +35,7 @@ export default function Navbar({ whiteBg = false }) {
 
   const navItems = [
     { name: 'Home', href: '/' },
+    { name: 'Administration', href: '/administration' },
     {
       name: 'Society',
       href: '/',
@@ -45,8 +46,7 @@ export default function Navbar({ whiteBg = false }) {
       ]
     },
     { name: 'Notice', href: '/notices' },
-    { name: 'Events', href: '/events' },
-    { name: 'Administration', href: '/administration' }
+    { name: 'Events', href: '/events' }
   ];
 
   return (
@@ -64,17 +64,23 @@ export default function Navbar({ whiteBg = false }) {
             className="flex items-center space-x-2"
             whileHover={{ scale: 1.05 }}
           >
-            <Image
-              src={whiteBg || isScrolled ? `/sac-logo-b.png` : `/sac-logo-y.png`} // Add your logo to public folder
-              // src={'/sac-logo-b.png'} // Add your logo to public folder
-              alt="NITJSR Logo"
-              width={40}
-              height={40}
-            />
+            <Link href={'/'}>
+              <Image
+                src={whiteBg || isScrolled ? `/sac-logo-b.png` : `/sac-logo-y.png`} // Add your logo to public folder
+                // src={'/sac-logo-b.png'} // Add your logo to public folder
+                alt="NITJSR Logo"
+                width={40}
+                height={40}
+              />
+            </Link>
             <div className={`font-bold ${whiteBg || isScrolled ? 'text-gray-900' : 'text-white'}`}>
-              <span className="text-2xl">NITJSR</span>
-              <span className="text-sm block text-blue-600">Student Activities</span>
+              <Link href={'/'}>
+                <span className="text-2xl">NITJSR</span>
+                <span className="text-sm block text-blue-600">Student Activities</span>
+              </Link>
             </div>
+
+
           </motion.div>
 
           {/* Desktop Menu */}
