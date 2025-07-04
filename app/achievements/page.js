@@ -8,17 +8,17 @@ import Footer from '@/components/Footer';
 const categories = ['Technical', 'Cultural', 'Sports', 'Other'];
 
 const categoryColors = {
+    Sports: 'bg-green-100 text-green-800',
     Technical: 'bg-blue-100 text-blue-800',
     Cultural: 'bg-purple-100 text-purple-800',
-    Sports: 'bg-green-100 text-green-800',
     // Academic: 'bg-yellow-100 text-yellow-800',
     Other: 'bg-gray-100 text-gray-800'
 };
 
 const categoryIcons = {
+    Sports: '⚽',
     Technical: '💻',
     Cultural: '🎭',
-    Sports: '⚽',
     Academic: '📚',
     Other: '🏆'
 };
