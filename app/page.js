@@ -575,7 +575,7 @@ export default function Home() {
                     <div className="mt-8 pt-4 border-t border-gray-200">
                       <p className="text-gray-600 text-sm">
                         <span className="font-semibold">Office Hours:</span> Monday to Friday, 10:00 AM - 5:00 PM<br />
-                        <span className="font-semibold">Contact:</span> dean.sa@nitjsr.ac.in
+                        <span className="font-semibold">Contact:</span> dean.sw@nitjsr.ac.in
                       </p>
                     </div>
                   </div>

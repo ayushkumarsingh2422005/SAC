@@ -39,24 +39,6 @@ export default function page() {
         dean_associate_dean: {
             label: 'Dean and Associate Dean',
             people: [
-                // {
-                //     name: 'Prof Prabha Chand',
-                //     title: 'Faculty welfare',
-                //     image: 'https://nitjsr.ac.in/backend/uploads/Faculty/ME114/profile/8d5b50a4-d81e-42df-b321-63d37c6f4145.png',
-                //     contact: {
-                //         email: 'dean.fw@nitjsr.ac.in',
-                //         phone: '+91-12345-67893'
-                //     }
-                // },
-                // {
-                //     name: 'Prof Krishna Bihari Yadav',
-                //     title: 'Industry and Alumni Relations',
-                //     image: 'https://nitjsr.ac.in/backend/uploads/Faculty/EE108/profile/d75d622a-0fbb-43b1-b8b8-35a5148cf430.jpg',
-                //     contact: {
-                //         email: 'dean.ia@nitjsr.ac.in',
-                //         phone: '+91-12345-67892'
-                //     }
-                // },
                 {
                     name: 'Dr Rakesh Pratap Singh',
                     title: 'Dean Students\' Welfare',
@@ -67,9 +49,9 @@ export default function page() {
                     }
                 },
                 {
-                    name: 'Dr Poulami Maji',
+                    name: 'Dr Sakthivel S',
                     title: 'Associate Dean Students\' Welfare',
-                    image: 'https://nitjsr.ac.in/backend/uploads/Faculty/MM105/profile/57c12643-fc04-458b-99a9-3f45ef0701ab.jpg', // No image provided
+                    image: 'https://nitjsr.ac.in/backend/uploads/Faculty/CH105/profile/7ce371fc-6110-43de-a29a-447ff3208185.jpg', // No image provided
                     contact: {
                         email: '',
                         phone: ''
@@ -84,33 +66,15 @@ export default function page() {
                         phone: ''
                     }
                 },
-                // {
-                //     name: 'Prof UMESH KUMAR SINHA',
-                //     title: 'Planning and Development',
-                //     image: 'https://nitjsr.ac.in/backend/uploads/Faculty/EE114/profile/4c4210ba-8bf6-40f4-a1cc-e346c4206caa.jpeg', // No image provided
-                //     contact: {
-                //         email: 'dean.pd@nitjsr.ac.in',
-                //         phone: ''
-                //     }
-                // },
-                // {
-                //     name: 'Prof Satish Kumar',
-                //     title: 'Research and Consultancy',
-                //     image: 'https://nitjsr.ac.in/backend/uploads/Faculty/ME117/profile/d11340f5-94c0-4177-a081-02b09771640c.JPG', // No image provided
-                //     contact: {
-                //         email: 'dean.rc@nitjsr.ac.in',
-                //         phone: ''
-                //     }
-                // },
-                // {
-                //     name: 'Prof Mrityunjay Kumar Sinha',
-                //     title: 'Academic',
-                //     image: 'https://nitjsr.ac.in/backend/uploads/Faculty/ME108/profile/19cbb633-ebd5-4fc9-ad52-688350940df1.jpg', // No image provided
-                //     contact: {
-                //         email: 'dean.ac@nitjsr.ac.in',
-                //         phone: ''
-                //     }
-                // }
+                {
+                    name: 'Dr Poulami Maji',
+                    title: 'Associate Dean Students\' Welfare',
+                    image: 'https://nitjsr.ac.in/backend/uploads/Faculty/MM105/profile/57c12643-fc04-458b-99a9-3f45ef0701ab.jpg', // No image provided
+                    contact: {
+                        email: '',
+                        phone: ''
+                    }
+                },
             ]
         },
         principal_sas_officer: {
@@ -161,7 +125,7 @@ export default function page() {
                     title: 'Assistant Professor, F/I Sports',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'skarthick.civil@nitjsr.ac.in',
                         phone: ''
                     }
                 },
@@ -170,7 +134,7 @@ export default function page() {
                     title: 'Assistant Professor, F/I Sports',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'sakthi.chem@nitjsr.ac.in',
                         phone: ''
                     }
                 },
@@ -179,16 +143,16 @@ export default function page() {
                     title: 'Assistant Professor, F/I Sports',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'jichilmajhi.met@nitjsr.ac.in',
                         phone: ''
                     }
                 },
                 {
-                    name: 'Dr JITENDRA KUMAR',
+                    name: 'Dr Jitendra Kumar',
                     title: 'Assistant Professor, F/I Sports',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'jitendra.ee@nitjsr.ac.in',
                         phone: ''
                     }
                 },
@@ -197,16 +161,16 @@ export default function page() {
                     title: 'Assistant Professor, F/I Sports',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'amitkumar.ece@nitjsr.ac.in',
                         phone: ''
                     }
                 },
                 {
-                    name: 'Dr DINESH KUMAR',
+                    name: 'Dr Dinesh Kumar',
                     title: 'Assistant Professor, F/I Technical Activities',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'dinesh.prod@nitjsr.ac.in',
                         phone: ''
                     }
                 },
@@ -215,7 +179,7 @@ export default function page() {
                     title: 'Assistant Professor, F/I Technical Activities',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'basudeb.ece@nitjsr.ac.in',
                         phone: ''
                     }
                 },
@@ -224,16 +188,16 @@ export default function page() {
                     title: 'Assistant Professor, F/I Cultural Activities',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'kksharma.ce@nitjsr.ac.in',
                         phone: ''
                     }
                 },
                 {
-                    name: 'Dr ANANYO BHATTACHARYA',
+                    name: 'Dr Ananyo Bhattacharya',
                     title: 'Assistant Professor, F/I Cultural Activities',
                     image: '/profile.png',
                     contact: {
-                        email: '',
+                        email: 'ananyo.ee@nitjsr.ac.in',
                         phone: ''
                     }
                 }
@@ -245,12 +209,12 @@ export default function page() {
             image: '/sasassistance.jpg',
             contact: {
                 email: 'provat.sas@nitjsr.ac.in',
-                phone: ''
+                phone: '9836353526'
             },
             note: 'This position is currently vacant.'
         },
         sac_office_staff: {
-            label: 'SAC Office Staff',
+            label: 'Sr. Attendant',
             name: 'Mr. Jyoti Lal Singh',
             image: '/profile.png',
             contact: {
@@ -329,7 +293,7 @@ export default function page() {
                                         <img
                                             src={person.image}
                                             alt={person.name}
-                                            className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-full border-2 border-blue-100 mr-0 sm:mr-4 mb-2 sm:mb-0"
+                                            className="w-14 h-14 sm:w-16 sm:h-16 object-cover rounded-full border-2 border-blue-100 mr-0 sm:mr-4 mb-2 sm:mb-0 aspect-square"
                                         />
                                         <div className="flex-1 text-center sm:text-left">
                                             <div className="font-semibold text-gray-900">{person.name}</div>
@@ -348,7 +312,7 @@ export default function page() {
                             <img
                                 src={tabLabels[activeTab].image}
                                 alt={tabLabels[activeTab].name}
-                                className="w-24 h-24 sm:w-32 sm:h-32 lg:w-[40vh] lg:h-[40vh] object-cover rounded-full mb-4 lg:mb-0 border-4 border-blue-100 transition-all"
+                                className="w-24 h-24 sm:w-32 sm:h-32 lg:w-[40vh] lg:h-[40vh] object-cover rounded-full mb-4 lg:mb-0 border-4 border-blue-100 transition-all aspect-square"
                             />
                             <div className="w-full lg:px-6 px-0 flex flex-col items-center lg:items-start">
                                 <h2 className="text-base sm:text-lg lg:text-2xl font-bold text-gray-900 mb-1 text-center lg:text-left">
